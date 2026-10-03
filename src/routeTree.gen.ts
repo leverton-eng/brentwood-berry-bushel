@@ -10,15 +10,23 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as CalendarRouteImport } from './routes/calendar'
 import { Route as EventsRouteImport } from './routes/events'
+import { Route as FarmerRouteImport } from './routes/farmer'
 import { Route as MapRouteImport } from './routes/map'
+import { Route as PlanRouteImport } from './routes/plan'
 import { Route as FarmsIndexRouteImport } from './routes/farms.index'
 import { Route as FarmsFarmIdRouteImport } from './routes/farms.$farmId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CalendarRoute = CalendarRouteImport.update({
@@ -31,9 +39,19 @@ const EventsRoute = EventsRouteImport.update({
   path: '/events',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FarmerRoute = FarmerRouteImport.update({
+  id: '/farmer',
+  path: '/farmer',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MapRoute = MapRouteImport.update({
   id: '/map',
   path: '/map',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlanRoute = PlanRouteImport.update({
+  id: '/plan',
+  path: '/plan',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FarmsIndexRoute = FarmsIndexRouteImport.update({
@@ -49,50 +67,82 @@ const FarmsFarmIdRoute = FarmsFarmIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/calendar': typeof CalendarRoute
   '/events': typeof EventsRoute
+  '/farmer': typeof FarmerRoute
   '/map': typeof MapRoute
+  '/plan': typeof PlanRoute
   '/farms/$farmId': typeof FarmsFarmIdRoute
   '/farms/': typeof FarmsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/calendar': typeof CalendarRoute
   '/events': typeof EventsRoute
+  '/farmer': typeof FarmerRoute
   '/map': typeof MapRoute
+  '/plan': typeof PlanRoute
   '/farms/$farmId': typeof FarmsFarmIdRoute
   '/farms': typeof FarmsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/calendar': typeof CalendarRoute
   '/events': typeof EventsRoute
+  '/farmer': typeof FarmerRoute
   '/map': typeof MapRoute
+  '/plan': typeof PlanRoute
   '/farms/$farmId': typeof FarmsFarmIdRoute
   '/farms/': typeof FarmsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/calendar' | '/events' | '/map' | '/farms/$farmId' | '/farms/'
+    | '/'
+    | '/admin'
+    | '/calendar'
+    | '/events'
+    | '/farmer'
+    | '/map'
+    | '/plan'
+    | '/farms/$farmId'
+    | '/farms/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/calendar' | '/events' | '/map' | '/farms/$farmId' | '/farms'
+  to:
+    | '/'
+    | '/admin'
+    | '/calendar'
+    | '/events'
+    | '/farmer'
+    | '/map'
+    | '/plan'
+    | '/farms/$farmId'
+    | '/farms'
   id:
     | '__root__'
     | '/'
+    | '/admin'
     | '/calendar'
     | '/events'
+    | '/farmer'
     | '/map'
+    | '/plan'
     | '/farms/$farmId'
     | '/farms/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRoute
   CalendarRoute: typeof CalendarRoute
   EventsRoute: typeof EventsRoute
+  FarmerRoute: typeof FarmerRoute
   MapRoute: typeof MapRoute
+  PlanRoute: typeof PlanRoute
   FarmsFarmIdRoute: typeof FarmsFarmIdRoute
   FarmsIndexRoute: typeof FarmsIndexRoute
 }
@@ -104,6 +154,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/calendar': {
@@ -120,11 +177,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EventsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/farmer': {
+      id: '/farmer'
+      path: '/farmer'
+      fullPath: '/farmer'
+      preLoaderRoute: typeof FarmerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/map': {
       id: '/map'
       path: '/map'
       fullPath: '/map'
       preLoaderRoute: typeof MapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/plan': {
+      id: '/plan'
+      path: '/plan'
+      fullPath: '/plan'
+      preLoaderRoute: typeof PlanRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/farms/': {
@@ -146,9 +217,12 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRoute,
   CalendarRoute: CalendarRoute,
   EventsRoute: EventsRoute,
+  FarmerRoute: FarmerRoute,
   MapRoute: MapRoute,
+  PlanRoute: PlanRoute,
   FarmsFarmIdRoute: FarmsFarmIdRoute,
   FarmsIndexRoute: FarmsIndexRoute,
 }
