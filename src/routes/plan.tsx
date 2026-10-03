@@ -74,6 +74,18 @@ function PlanPage() {
                     );
                   })}
                 </div>
+                {draft.date && draft.farmIds.length > 0 && (
+                  <div className="mt-3 space-y-1.5 rounded-xl bg-secondary/60 p-3 text-sm">
+                    <p className="font-semibold">Expected visitors on {formatEventDate(draft.date)}</p>
+                    {draft.farmIds.map((id) => (
+                      <div key={id} className="flex items-center justify-between gap-2">
+                        <span>{farms.find((f) => f.id === id)?.name}</span>
+                        <CrowdBadge {...expectedVisitors(id, draft.date, plans)} />
+                      </div>
+                    ))}
+                    <p className="text-xs text-muted-foreground">Estimated from planned visits. Includes sample data.</p>
+                  </div>
+                )}
               </fieldset>
               <label className="sm:col-span-2"><span className="label">Notes</span><textarea className="input min-h-20" value={draft.notes} onChange={(e) => setDraft({ ...draft, notes: e.target.value })} placeholder="e.g. bring cooler, lunch in downtown" /></label>
               <div className="flex gap-2 sm:col-span-2">
@@ -111,8 +123,10 @@ function PlanPage() {
                               {ok ? <CheckCircle2 className="h-4 w-4 text-leaf" /> : <AlertTriangle className="h-4 w-4 text-accent" />}
                               <Link to="/farms/$farmId" params={{ farmId: id }} className="font-semibold hover:underline">{f.name}</Link>
                               <StatusBadge status={f.status} />
+                              <CrowdBadge {...expectedVisitors(id, p.date, plans)} />
                             </div>
                             <p className="mt-1 text-muted-foreground">{dow.label}: {hrs ?? "No listed hours"} · {f.payment.join(", ")}</p>
+                            <p className="mt-1 text-muted-foreground">Available: {availableProduce(id).map((x) => `${x!.emoji} ${x!.name}`).join(", ") || "No produce currently listed as available"}</p>
                             <UpdatedNote iso={f.lastUpdated} />
                           </li>
                         );
