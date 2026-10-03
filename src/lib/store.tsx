@@ -1,6 +1,6 @@
 // Client-side demo store. Persists edits to localStorage so the MVP works without a backend.
 // Swap these actions for real API calls when a database is added.
-import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useState, type Context, type ReactNode } from "react";
 import { EVENTS, FARMS, PRODUCE, USERS } from "@/data/sample-data";
 import type { AppUser, Farm, FarmEvent, Flag, Produce, Role, VisitPlan } from "@/data/types";
 
@@ -34,7 +34,9 @@ type Ctx = State & {
   track: (k: "pageViews" | "searches" | "chatQuestions", farmId?: string) => void;
   reset: () => void;
 };
-const StoreCtx = createContext<Ctx | null>(null);
+// Keep one context instance across hot reloads so providers and consumers always match.
+const g = globalThis as typeof globalThis & { __upickStoreCtx?: Context<Ctx | null> };
+const StoreCtx = g.__upickStoreCtx ?? (g.__upickStoreCtx = createContext<Ctx | null>(null));
 
 export function StoreProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<State>(initial);
