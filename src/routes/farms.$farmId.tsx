@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { FARMS } from "@/data/sample-data";
 import { BookmarkButton, EventCard, SampleBadge, StatusBadge, UpdatedNote } from "@/components/ui-bits";
 import { CrowdBadge } from "@/components/CrowdBadge";
+import { ShareButton } from "@/components/ShareButton";
 import { useStore } from "@/lib/store";
 import { expectedVisitors, nextDays } from "@/lib/crowd";
 import { AVAIL_LABEL, DAYS, FARM_IMAGES, MONTHS, directionsUrl, formatEventDate } from "@/lib/farm-utils";
@@ -111,6 +112,11 @@ function FarmProfile() {
           <div className="card space-y-3 p-5">
             <Link to="/plan" search={{ farm: farm.id }} className="btn-primary w-full"><CalendarPlus className="h-4 w-4" /> Plan a visit</Link>
             <BookmarkButton farmId={farm.id} withLabel />
+            <ShareButton
+              label="Share this farm"
+              title={farm.name}
+              text={`Check out ${farm.name} (sample listing) on Brentwood U-Pick Connect — ${farm.address}. Produce: ${farm.produce.filter((p) => p.availability === "available" || p.availability === "limited").map((p) => p.produceId.replace(/-/g, " ")).join(", ") || "see listing"}.`}
+            />
             <a href={directionsUrl(farm)} target="_blank" rel="noreferrer" className="btn-outline w-full"><Navigation className="h-4 w-4" /> Get directions</a>
             <Link to="/map" search={{ farm: farm.id }} className="btn-outline w-full"><MapPin className="h-4 w-4" /> View on farm map</Link>
           </div>
