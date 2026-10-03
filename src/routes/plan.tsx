@@ -29,7 +29,7 @@ function PlanPage() {
 
   const save = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!draft.date || !draft.farmIds.length) return toast.error("Pick a date and at least one farm.");
+    if (!draft.date || !draft.farmIds.length) { toast.error("Pick a date and at least one farm."); return; }
     const plan = { ...draft, id: draft.id || crypto.randomUUID() };
     set((s) => ({ ...s, plans: s.plans.some((p) => p.id === plan.id) ? s.plans.map((p) => (p.id === plan.id ? plan : p)) : [...s.plans, plan] }));
     toast.success(draft.id ? "Visit updated" : "Visit planned");
@@ -79,7 +79,7 @@ function PlanPage() {
             <div className="mt-4 space-y-4">
               {!plans.length && <p className="card p-6 text-muted-foreground">No visits planned yet.</p>}
               {[...plans].sort((a, b) => a.date.localeCompare(b.date)).map((p) => {
-                const dow = DAYS[(new Date(p.date + "T12:00:00").getDay() + 6) % 7];
+                const dow = DAYS[(new Date(p.date + "T12:00:00").getDay() + 6) % 7]!;
                 return (
                   <div key={p.id} className="card p-5">
                     <div className="flex flex-wrap items-center justify-between gap-2">

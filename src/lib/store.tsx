@@ -53,7 +53,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
   const set = useCallback((fn: (s: State) => State) => setState(fn), []);
   const now = () => new Date().toISOString();
-  const currentUser = state.users.find((u) => u.id === state.currentUserId) ?? state.users[0];
+  const currentUser = (state.users.find((u) => u.id === state.currentUserId) ?? state.users[0])!;
 
   const value: Ctx = {
     ...state,
