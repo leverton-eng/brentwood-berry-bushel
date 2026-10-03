@@ -2,13 +2,17 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { AlertTriangle, CheckCircle2, Pencil, Trash2 } from "lucide-react";
 import { useState, type FormEvent } from "react";
 import { toast } from "sonner";
+import { z } from "zod";
 import { VISITOR_GUIDE } from "@/data/sample-data";
 import type { VisitPlan } from "@/data/types";
 import { FarmCard, PageHeader, StatusBadge, UpdatedNote } from "@/components/ui-bits";
+import { CrowdBadge } from "@/components/CrowdBadge";
 import { useStore } from "@/lib/store";
+import { expectedVisitors } from "@/lib/crowd";
 import { DAYS, formatEventDate } from "@/lib/farm-utils";
 
 export const Route = createFileRoute("/plan")({
+  validateSearch: z.object({ farm: z.string().optional().catch(undefined) }),
   head: () => ({
     meta: [
       { title: "Plan Your Visit — Brentwood U-Pick Connect" },
@@ -20,12 +24,17 @@ export const Route = createFileRoute("/plan")({
   component: PlanPage,
 });
 
-const empty = (): VisitPlan => ({ id: "", date: "", farmIds: [], partySize: 2, notes: "" });
+const empty = (farmIds: string[] = []): VisitPlan => ({ id: "", date: "", farmIds, partySize: 2, notes: "" });
 
 function PlanPage() {
-  const { farms, bookmarks, plans, set } = useStore();
+  const { farms, produce, bookmarks, plans, set } = useStore();
+  const { farm: preselect } = Route.useSearch();
   const saved = farms.filter((f) => bookmarks.includes(f.id));
-  const [draft, setDraft] = useState<VisitPlan>(empty());
+  const [draft, setDraft] = useState<VisitPlan>(() => empty(preselect && farms.some((f) => f.id === preselect) ? [preselect] : []));
+  const availableProduce = (farmId: string) => {
+    const f = farms.find((x) => x.id === farmId);
+    return (f?.produce ?? []).filter((fp) => fp.availability !== "done").map((fp) => produce.find((p) => p.id === fp.produceId)).filter(Boolean);
+  };
 
   const save = (e: FormEvent) => {
     e.preventDefault();
