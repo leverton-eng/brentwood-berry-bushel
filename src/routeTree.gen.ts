@@ -10,33 +10,91 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CalendarRouteImport } from './routes/calendar'
+import { Route as EventsRouteImport } from './routes/events'
+import { Route as MapRouteImport } from './routes/map'
+import { Route as FarmsIndexRouteImport } from './routes/farms.index'
+import { Route as FarmsFarmIdRouteImport } from './routes/farms.$farmId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CalendarRoute = CalendarRouteImport.update({
+  id: '/calendar',
+  path: '/calendar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EventsRoute = EventsRouteImport.update({
+  id: '/events',
+  path: '/events',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MapRoute = MapRouteImport.update({
+  id: '/map',
+  path: '/map',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FarmsIndexRoute = FarmsIndexRouteImport.update({
+  id: '/farms/',
+  path: '/farms/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FarmsFarmIdRoute = FarmsFarmIdRouteImport.update({
+  id: '/farms/$farmId',
+  path: '/farms/$farmId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/calendar': typeof CalendarRoute
+  '/events': typeof EventsRoute
+  '/map': typeof MapRoute
+  '/farms/$farmId': typeof FarmsFarmIdRoute
+  '/farms/': typeof FarmsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/calendar': typeof CalendarRoute
+  '/events': typeof EventsRoute
+  '/map': typeof MapRoute
+  '/farms/$farmId': typeof FarmsFarmIdRoute
+  '/farms': typeof FarmsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/calendar': typeof CalendarRoute
+  '/events': typeof EventsRoute
+  '/map': typeof MapRoute
+  '/farms/$farmId': typeof FarmsFarmIdRoute
+  '/farms/': typeof FarmsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    '/' | '/calendar' | '/events' | '/map' | '/farms/$farmId' | '/farms/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/calendar' | '/events' | '/map' | '/farms/$farmId' | '/farms'
+  id:
+    | '__root__'
+    | '/'
+    | '/calendar'
+    | '/events'
+    | '/map'
+    | '/farms/$farmId'
+    | '/farms/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CalendarRoute: typeof CalendarRoute
+  EventsRoute: typeof EventsRoute
+  MapRoute: typeof MapRoute
+  FarmsFarmIdRoute: typeof FarmsFarmIdRoute
+  FarmsIndexRoute: typeof FarmsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +106,51 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/calendar': {
+      id: '/calendar'
+      path: '/calendar'
+      fullPath: '/calendar'
+      preLoaderRoute: typeof CalendarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/events': {
+      id: '/events'
+      path: '/events'
+      fullPath: '/events'
+      preLoaderRoute: typeof EventsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/map': {
+      id: '/map'
+      path: '/map'
+      fullPath: '/map'
+      preLoaderRoute: typeof MapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/farms/': {
+      id: '/farms/'
+      path: '/farms'
+      fullPath: '/farms/'
+      preLoaderRoute: typeof FarmsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/farms/$farmId': {
+      id: '/farms/$farmId'
+      path: '/farms/$farmId'
+      fullPath: '/farms/$farmId'
+      preLoaderRoute: typeof FarmsFarmIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CalendarRoute: CalendarRoute,
+  EventsRoute: EventsRoute,
+  MapRoute: MapRoute,
+  FarmsFarmIdRoute: FarmsFarmIdRoute,
+  FarmsIndexRoute: FarmsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
