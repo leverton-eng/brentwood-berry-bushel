@@ -48,6 +48,9 @@ function FarmProfile() {
       <div className="relative h-64 md:h-96">
         <img src={FARM_IMAGES[farm.image]} alt={farm.name} width={1024} height={768} className="h-full w-full object-cover" />
         <div className="absolute inset-0 bg-hero-overlay" />
+        <div className="absolute inset-x-0 top-0 mx-auto max-w-6xl px-4 pt-4">
+          <Link to="/farms" className="inline-flex items-center gap-1 rounded-full bg-background/90 px-3 py-1.5 text-sm font-semibold text-foreground shadow-card hover:bg-background">← All farms</Link>
+        </div>
         <div className="absolute inset-x-0 bottom-0 mx-auto max-w-6xl px-4 pb-6">
           <div className="flex flex-wrap items-center gap-2"><StatusBadge status={farm.status} />{!farm.verified && <SampleBadge />}</div>
           <h1 className="mt-2 text-3xl font-semibold text-primary-foreground md:text-5xl">{farm.name}</h1>
@@ -144,6 +147,12 @@ function FarmProfile() {
           </div>
         </aside>
       </div>
+      <div className="h-16 lg:hidden" aria-hidden />
+      <nav aria-label="Quick actions" className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-3 gap-2 border-t border-border bg-background/95 p-2 backdrop-blur lg:hidden">
+        <a href={`tel:${farm.phone}`} className="btn-outline w-full px-2 text-sm"><Phone className="h-4 w-4" /> Call</a>
+        <a href={directionsUrl(farm)} target="_blank" rel="noreferrer" className="btn-outline w-full px-2 text-sm"><Navigation className="h-4 w-4" /> Directions</a>
+        <Link to="/plan" search={{ farm: farm.id }} className="btn-primary w-full px-2 text-sm"><CalendarPlus className="h-4 w-4" /> Plan</Link>
+      </nav>
     </article>
   );
 }

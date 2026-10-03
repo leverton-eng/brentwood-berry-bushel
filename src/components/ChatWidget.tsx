@@ -1,5 +1,5 @@
 // Rule-based assistant: answers ONLY from data already in the app. No external AI calls.
-import { Link } from "@tanstack/react-router";
+import { Link, useRouterState } from "@tanstack/react-router";
 import { MessageCircle, Send, Sprout, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { VISITOR_GUIDE } from "@/data/sample-data";
@@ -60,6 +60,8 @@ export function answer(q: string, farms: Farm[], produce: Produce[], events: { t
 
 export function ChatWidget() {
   const { farms, produce, events, track } = useStore();
+  const path = useRouterState({ select: (s) => s.location.pathname });
+  const onFarm = /^\/farms\/[^/]+$/.test(path);
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
   const [msgs, setMsgs] = useState<Msg[]>([{ from: "bot", text: "Hi! I'm the Harvest Helper. Ask me about farms, what's in season, hours, locations or how to prepare. I only answer from information on this site." }]);
@@ -77,7 +79,7 @@ export function ChatWidget() {
   return (
     <>
       {!open && (
-        <button onClick={() => setOpen(true)} className="btn-accent fixed bottom-4 right-4 z-50 px-5 py-3 shadow-card" aria-label="Open Harvest Helper chat">
+        <button onClick={() => setOpen(true)} className={`btn-accent fixed right-4 z-50 px-5 py-3 shadow-card ${onFarm ? "bottom-20 lg:bottom-4" : "bottom-4"}`} aria-label="Open Harvest Helper chat">
           <MessageCircle className="h-5 w-5" /> <span className="hidden sm:inline">Ask Harvest Helper</span>
         </button>
       )}
@@ -99,16 +101,14 @@ export function ChatWidget() {
                 )}
               </div>
             ))}
-            {msgs.length === 1 && (
-              <div className="flex flex-wrap gap-2">
-                {["What's in season now?", "Which farms are open?", "Where can I pick cherries?", "What should I bring?"].map((s) => (
-                  <button key={s} onClick={() => send(s)} className="chip hover:bg-sun/40">{s}</button>
-                ))}
-              </div>
-            )}
             <div ref={endRef} />
           </div>
-          <form onSubmit={(e) => { e.preventDefault(); send(input); }} className="flex gap-2 border-t border-border p-3">
+          <div className="flex gap-2 overflow-x-auto border-t border-border px-3 pt-3" aria-label="Quick questions">
+            {["What's open today?", "What's ripe now?", "What should I pack?", "Upcoming events?", "Where can I pick cherries?"].map((s) => (
+              <button key={s} type="button" onClick={() => send(s)} className="chip shrink-0 whitespace-nowrap hover:bg-sun/40">{s}</button>
+            ))}
+          </div>
+          <form onSubmit={(e) => { e.preventDefault(); send(input); }} className="flex gap-2 p-3">
             <input ref={inputRef} className="input" value={input} onChange={(e) => setInput(e.target.value)} placeholder="Ask about farms or produce…" aria-label="Your question" />
             <button className="btn-primary px-3" aria-label="Send"><Send className="h-4 w-4" /></button>
           </form>
