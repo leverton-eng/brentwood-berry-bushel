@@ -60,11 +60,19 @@ function Directory() {
             Open for picking only
           </label>
         </div>
-        <p className="mt-6 text-sm text-muted-foreground">{list.length} farm{list.length === 1 ? "" : "s"} found</p>
+        <div className="mt-6 flex flex-wrap items-center justify-between gap-2">
+          <p className="text-sm text-muted-foreground">{list.length} farm{list.length === 1 ? "" : "s"} found</p>
+          {(q || pf || open) && <button onClick={() => nav({ search: {} })} className="btn-ghost text-sm">Reset all filters</button>}
+        </div>
         <div className="mt-3 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {list.map((f) => <FarmCard key={f.id} farm={f} />)}
         </div>
-        {!list.length && <p className="card mt-4 p-8 text-center text-muted-foreground">No farms match those filters yet. Try another produce item.</p>}
+        {!list.length && (
+          <div className="card mt-4 p-8 text-center text-muted-foreground">
+            <p>No farms match those filters yet. Try another produce item.</p>
+            <button onClick={() => nav({ search: {} })} className="btn-outline mt-4">Reset all filters</button>
+          </div>
+        )}
       </div>
     </>
   );
