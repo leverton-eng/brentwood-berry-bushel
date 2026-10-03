@@ -7,6 +7,7 @@ import { VISITOR_GUIDE } from "@/data/sample-data";
 import type { VisitPlan } from "@/data/types";
 import { FarmCard, PageHeader, StatusBadge, UpdatedNote } from "@/components/ui-bits";
 import { CrowdBadge } from "@/components/CrowdBadge";
+import { ShareButton } from "@/components/ShareButton";
 import { useStore } from "@/lib/store";
 import { expectedVisitors } from "@/lib/crowd";
 import { DAYS, formatEventDate } from "@/lib/farm-utils";
@@ -106,6 +107,7 @@ function PlanPage() {
                     <div className="flex flex-wrap items-center justify-between gap-2">
                       <h3 className="text-lg font-semibold">{formatEventDate(p.date)} · {p.partySize} people</h3>
                       <div className="flex gap-1">
+                        <ShareButton iconOnly label="Share this plan" className="btn-ghost p-2" title="Our U-pick plan" url={typeof window !== "undefined" ? window.location.origin : undefined} text={[`U-pick plan: ${formatEventDate(p.date)} (${p.partySize} people)`, ...p.farmIds.map((id) => { const f = farms.find((x) => x.id === id); if (!f) return ""; return `• ${f.name} (sample listing) — ${f.address}. ${dow.label}: ${f.hours[dow.key] ?? "no listed hours"}. Available: ${availableProduce(id).map((x) => x!.name).join(", ") || "none listed"}`; }), p.notes ? `Notes: ${p.notes}` : "", "Check hours with the farm before you go."].filter(Boolean).join("\n")} />
                         <button className="btn-ghost p-2" aria-label="Edit visit" onClick={() => setDraft(p)}><Pencil className="h-4 w-4" /></button>
                         <button className="btn-ghost p-2" aria-label="Delete visit" onClick={() => set((s) => ({ ...s, plans: s.plans.filter((x) => x.id !== p.id) }))}><Trash2 className="h-4 w-4" /></button>
                       </div>
@@ -142,7 +144,7 @@ function PlanPage() {
         <aside className="space-y-4">
           {VISITOR_GUIDE.map((g) => (
             <div key={g.title} className="card p-5">
-              <h2 className="text-lg font-semibold">{g.title}</h2>
+              <div className="flex items-center justify-between gap-2"><h2 className="text-lg font-semibold">{g.title}</h2><ShareButton iconOnly label={`Share ${g.title}`} className="btn-ghost p-2" title={g.title} text={`${g.title}:\n${g.items.map((i) => `• ${i}`).join("\n")}`} /></div>
               <ul className="mt-2 space-y-1.5 text-sm text-muted-foreground">{g.items.map((i) => <li key={i} className="flex gap-2"><span className="text-leaf">✓</span>{i}</li>)}</ul>
             </div>
           ))}

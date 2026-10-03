@@ -115,7 +115,7 @@ function FarmProfile() {
             <ShareButton
               label="Share this farm"
               title={farm.name}
-              text={`Check out ${farm.name} (sample listing) on Brentwood U-Pick Connect — ${farm.address}. Produce: ${farm.produce.filter((p) => p.availability !== "ended").map((p) => p.produceId.replace(/-/g, " ")).join(", ") || "see listing"}.`}
+              text={`Check out ${farm.name} (sample listing) on Brentwood U-Pick Connect — ${farm.address}. Produce: ${farm.produce.filter((p) => p.availability === "available" || p.availability === "limited").map((p) => p.produceId.replace(/-/g, " ")).join(", ") || "see listing"}.`}
             />
             <a href={directionsUrl(farm)} target="_blank" rel="noreferrer" className="btn-outline w-full"><Navigation className="h-4 w-4" /> Get directions</a>
             <Link to="/map" search={{ farm: farm.id }} className="btn-outline w-full"><MapPin className="h-4 w-4" /> View on farm map</Link>
