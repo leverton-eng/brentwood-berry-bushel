@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import { Bookmark, BookmarkCheck, CalendarDays, Clock, FlaskConical, MapPin } from "lucide-react";
 import type { Farm, FarmEvent, FarmStatus } from "@/data/types";
@@ -107,7 +108,7 @@ export function EventCard({ event }: { event: FarmEvent }) {
   );
 }
 
-export function PageHeader({ eyebrow, title, children }: { eyebrow?: string; title: string; children?: React.ReactNode }) {
+export function PageHeader({ eyebrow, title, children }: { eyebrow?: string; title: string; children?: ReactNode }) {
   return (
     <header className="border-b border-border bg-secondary/50">
       <div className="mx-auto max-w-6xl px-4 py-8 md:py-12">

@@ -1,6 +1,6 @@
 // Shared editor used by both farmer and admin dashboards.
 import { Plus, Trash2 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { toast } from "sonner";
 import type { Farm, FarmEvent, FarmProduceEntry } from "@/data/types";
 import { useStore } from "@/lib/store";
