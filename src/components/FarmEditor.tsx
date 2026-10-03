@@ -81,7 +81,7 @@ export function EventManager({ farmId }: { farmId?: string }) {
   const [d, setD] = useState<FarmEvent>(blankEvent(farmId));
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!d.title || !d.date) return toast.error("Title and date are required.");
+    if (!d.title || !d.date) { toast.error("Title and date are required."); return; }
     const loc = d.location || farms.find((f) => f.id === d.farmId)?.name || "";
     upsertEvent({ ...d, location: loc, id: d.id || crypto.randomUUID() });
     toast.success(d.id ? "Event updated" : "Event added");

@@ -7,7 +7,7 @@ export function project(lat: number, lng: number) {
   return { x: ((lng - B.minLng) / (B.maxLng - B.minLng)) * 100, y: (1 - (lat - B.minLat) / (B.maxLat - B.minLat)) * 100 };
 }
 
-export function FarmMap({ farms, selectedId, onSelect, className }: { farms: Farm[]; selectedId?: string; onSelect?: (id: string) => void; className?: string }) {
+export function FarmMap({ farms, selectedId, onSelect, className }: { farms: Farm[]; selectedId?: string | undefined; onSelect?: (id: string) => void; className?: string }) {
   return (
     <div className={cn("relative overflow-hidden rounded-2xl border border-border bg-map-land", className)}>
       <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 h-full w-full" aria-hidden>

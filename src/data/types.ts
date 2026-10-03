@@ -49,7 +49,7 @@ export interface FarmEvent {
   title: string;
   date: string; // ISO date
   time: string;
-  farmId?: string;
+  farmId?: string | undefined;
   location: string;
   description: string;
   verified: boolean;
@@ -61,7 +61,7 @@ export interface AppUser {
   name: string;
   email: string;
   role: Role;
-  farmId?: string;
+  farmId?: string | undefined;
 }
 
 export interface VisitPlan {
