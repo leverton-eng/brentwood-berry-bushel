@@ -48,7 +48,7 @@ function Home() {
         </div>
       </section>
 
-      <section className="mx-auto -mt-8 grid max-w-6xl grid-cols-2 gap-3 px-4 md:grid-cols-4">
+      <section className="mx-auto mt-6 grid max-w-6xl grid-cols-2 gap-3 px-4 md:mt-8 md:grid-cols-4">
         {[
           { to: "/farms", icon: Sprout, label: "Browse farms" },
           { to: "/calendar", icon: CalendarDays, label: "Harvest calendar" },
