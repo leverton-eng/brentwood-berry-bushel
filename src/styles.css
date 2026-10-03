@@ -84,11 +84,11 @@
 @utility bg-hero-overlay { background-image: var(--gradient-hero); }
 
 @layer components {
-  .btn { @apply inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50; }
-  .btn-primary { @apply btn bg-primary text-primary-foreground hover:bg-primary/90; }
-  .btn-accent { @apply btn bg-accent text-accent-foreground hover:bg-accent/90; }
-  .btn-outline { @apply btn border border-border bg-card text-foreground hover:bg-secondary; }
-  .btn-ghost { @apply btn text-foreground hover:bg-secondary; }
+  .btn, .btn-primary, .btn-accent, .btn-outline, .btn-ghost { @apply inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50; }
+  .btn-primary { @apply bg-primary text-primary-foreground hover:bg-primary/90; }
+  .btn-accent { @apply bg-accent text-accent-foreground hover:bg-accent/90; }
+  .btn-outline { @apply border border-border bg-card text-foreground hover:bg-secondary; }
+  .btn-ghost { @apply text-foreground hover:bg-secondary; }
   .card { @apply rounded-2xl border border-border bg-card text-card-foreground shadow-card; }
   .chip { @apply inline-flex items-center gap-1 rounded-full bg-secondary px-2.5 py-1 text-xs font-medium text-secondary-foreground; }
   .input { @apply w-full rounded-xl border border-input bg-card px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring; }
