@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { AlertTriangle, CheckCircle2, Pencil, Trash2 } from "lucide-react";
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import { toast } from "sonner";
 import { VISITOR_GUIDE } from "@/data/sample-data";
 import type { VisitPlan } from "@/data/types";
@@ -27,7 +27,7 @@ function PlanPage() {
   const saved = farms.filter((f) => bookmarks.includes(f.id));
   const [draft, setDraft] = useState<VisitPlan>(empty());
 
-  const save = (e: React.FormEvent) => {
+  const save = (e: FormEvent) => {
     e.preventDefault();
     if (!draft.date || !draft.farmIds.length) { toast.error("Pick a date and at least one farm."); return; }
     const plan = { ...draft, id: draft.id || crypto.randomUUID() };

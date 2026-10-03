@@ -79,7 +79,7 @@ export function EventManager({ farmId }: { farmId?: string }) {
   const { events, farms, upsertEvent, deleteEvent } = useStore();
   const list = events.filter((e) => farmId === undefined || e.farmId === farmId).sort((a, b) => a.date.localeCompare(b.date));
   const [d, setD] = useState<FarmEvent>(blankEvent(farmId));
-  const submit = (e: React.FormEvent) => {
+  const submit = (e: FormEvent) => {
     e.preventDefault();
     if (!d.title || !d.date) { toast.error("Title and date are required."); return; }
     const loc = d.location || farms.find((f) => f.id === d.farmId)?.name || "";
