@@ -1,10 +1,12 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { Clock, ExternalLink, Info, Mail, MapPin, Navigation, Phone, Sprout } from "lucide-react";
+import { CalendarPlus, Clock, ExternalLink, Info, Mail, MapPin, Navigation, Phone, Sprout } from "lucide-react";
 import { useEffect } from "react";
 import { FARMS } from "@/data/sample-data";
 import { BookmarkButton, EventCard, SampleBadge, StatusBadge, UpdatedNote } from "@/components/ui-bits";
+import { CrowdBadge } from "@/components/CrowdBadge";
 import { useStore } from "@/lib/store";
-import { AVAIL_LABEL, DAYS, FARM_IMAGES, MONTHS, directionsUrl } from "@/lib/farm-utils";
+import { expectedVisitors, nextDays } from "@/lib/crowd";
+import { AVAIL_LABEL, DAYS, FARM_IMAGES, MONTHS, directionsUrl, formatEventDate } from "@/lib/farm-utils";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/farms/$farmId")({
@@ -34,7 +36,7 @@ function FarmNotFound() {
 
 function FarmProfile() {
   const { farmId } = Route.useParams();
-  const { farms, produce, events, track } = useStore();
+  const { farms, produce, events, plans, track } = useStore();
   const farm = farms.find((f) => f.id === farmId);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { track("pageViews", farmId); }, [farmId]);
@@ -104,9 +106,25 @@ function FarmProfile() {
 
         <aside className="space-y-4">
           <div className="card space-y-3 p-5">
+            <Link to="/plan" search={{ farm: farm.id }} className="btn-primary w-full"><CalendarPlus className="h-4 w-4" /> Plan a visit</Link>
             <BookmarkButton farmId={farm.id} withLabel />
-            <a href={directionsUrl(farm)} target="_blank" rel="noreferrer" className="btn-primary w-full"><Navigation className="h-4 w-4" /> Get directions</a>
+            <a href={directionsUrl(farm)} target="_blank" rel="noreferrer" className="btn-outline w-full"><Navigation className="h-4 w-4" /> Get directions</a>
             <Link to="/map" search={{ farm: farm.id }} className="btn-outline w-full"><MapPin className="h-4 w-4" /> View on farm map</Link>
+          </div>
+          <div className="card p-5 text-sm">
+            <h2 className="text-lg font-semibold">Expected visitors</h2>
+            <p className="mt-1 text-xs text-muted-foreground">Estimated from planned visits. Includes sample data.</p>
+            <ul className="mt-3 space-y-1.5">
+              {nextDays(7).map((d) => {
+                const c = expectedVisitors(farm.id, d, plans);
+                return (
+                  <li key={d} className="flex items-center justify-between gap-2">
+                    <span className="text-muted-foreground">{formatEventDate(d)}</span>
+                    <CrowdBadge level={c.level} total={c.total} />
+                  </li>
+                );
+              })}
+            </ul>
           </div>
           <div className="card space-y-3 p-5 text-sm">
             <h2 className="text-lg font-semibold">Location & contact</h2>
