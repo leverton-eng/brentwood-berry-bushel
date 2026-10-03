@@ -1,7 +1,7 @@
 import { toast } from "sonner";
 
 // Shares text + link via the native share sheet when available, else copies to clipboard.
-export async function shareContent(opts: { title: string; text: string; url?: string }) {
+export async function shareContent(opts: { title: string; text: string; url?: string | undefined }) {
   const url = opts.url ?? (typeof window !== "undefined" ? window.location.href : "");
   const nav = typeof navigator !== "undefined" ? navigator : undefined;
   if (nav?.share) {

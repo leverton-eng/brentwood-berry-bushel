@@ -2,7 +2,7 @@ import { Share2 } from "lucide-react";
 import { shareContent } from "@/lib/share";
 
 export function ShareButton({ title, text, url, label = "Share", className = "btn-outline w-full", iconOnly = false }: {
-  title: string; text: string; url?: string; label?: string; className?: string; iconOnly?: boolean;
+  title: string; text: string; url?: string | undefined; label?: string; className?: string; iconOnly?: boolean;
 }) {
   return (
     <button type="button" className={className} aria-label={label} onClick={() => shareContent({ title, text, url })}>
