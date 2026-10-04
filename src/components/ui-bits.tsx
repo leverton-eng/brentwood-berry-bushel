@@ -54,7 +54,7 @@ export function BookmarkButton({ farmId, withLabel }: { farmId: string; withLabe
 export function FarmCard({ farm }: { farm: Farm }) {
   const { produce } = useStore();
   return (
-    <Link to="/farms/$farmId" params={{ farmId: farm.id }} className="card group flex flex-col overflow-hidden transition-transform hover:-translate-y-0.5">
+    <Link to="/farms/$farmId" params={{ farmId: farm.id }} className="card card-hover group flex flex-col overflow-hidden">
       <div className="relative aspect-[4/3] overflow-hidden">
         <img src={FARM_IMAGES[farm.image]} alt={farm.name} loading="lazy" width={1024} height={768} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
         <div className="absolute left-3 top-3"><StatusBadge status={farm.status} /></div>
@@ -83,7 +83,7 @@ export function EventCard({ event }: { event: FarmEvent }) {
   const farm = farms.find((f) => f.id === event.farmId);
   const d = new Date(event.date + "T12:00:00");
   return (
-    <article className="card flex gap-4 p-4">
+    <article className="card card-hover flex gap-4 p-4">
       <div className="flex h-16 w-16 shrink-0 flex-col items-center justify-center rounded-xl bg-accent text-accent-foreground">
         <span className="text-xs font-semibold uppercase">{d.toLocaleDateString("en-US", { month: "short" })}</span>
         <span className="font-display text-2xl font-bold leading-none">{d.getDate()}</span>
@@ -110,11 +110,11 @@ export function EventCard({ event }: { event: FarmEvent }) {
 
 export function PageHeader({ eyebrow, title, children }: { eyebrow?: string; title: string; children?: ReactNode }) {
   return (
-    <header className="border-b border-border bg-secondary/50">
+    <header className="border-b border-border bg-gradient-to-b from-secondary/70 to-background">
       <div className="mx-auto max-w-6xl px-4 py-8 md:py-12">
-        {eyebrow && <p className="mb-2 text-xs font-bold uppercase tracking-widest text-accent">{eyebrow}</p>}
-        <h1 className="text-3xl font-semibold md:text-5xl">{title}</h1>
-        {children && <div className="mt-3 max-w-2xl text-muted-foreground">{children}</div>}
+        {eyebrow && <p className="eyebrow mb-2">{eyebrow}</p>}
+        <h1 className="text-3xl font-semibold leading-tight md:text-[2.75rem]">{title}</h1>
+        {children && <div className="mt-3 max-w-2xl text-base leading-relaxed text-muted-foreground">{children}</div>}
       </div>
     </header>
   );

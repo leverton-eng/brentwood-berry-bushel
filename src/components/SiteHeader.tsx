@@ -15,26 +15,26 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const { users, currentUserId, set, role } = useStore();
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-background/90 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center gap-4 px-4 py-3">
-        <Link to="/" className="flex items-center gap-2" onClick={() => setOpen(false)}>
-          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-primary-foreground"><Sprout className="h-5 w-5" /></span>
-          <span className="font-display text-lg font-semibold leading-none">Brentwood<br className="sm:hidden" /><span className="text-accent"> U-Pick</span> Connect</span>
+    <header className="sticky top-0 z-40 border-b border-border/80 bg-background/85 backdrop-blur-md">
+      <div className="mx-auto flex h-16 max-w-6xl items-center gap-3 px-4">
+        <Link to="/" className="flex shrink-0 items-center gap-2.5 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" onClick={() => setOpen(false)}>
+          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-card"><Sprout className="h-5 w-5" /></span>
+          <span className="font-display text-base font-semibold leading-tight sm:text-lg">Brentwood <span className="text-accent">U-Pick</span><span className="hidden sm:inline"> Connect</span></span>
         </Link>
-        <nav className="ml-auto hidden items-center gap-1 lg:flex" aria-label="Main">
+        <nav className="ml-auto hidden items-center gap-0.5 lg:flex" aria-label="Main">
           {NAV.map((n) => (
-            <Link key={n.to} to={n.to} className="rounded-full px-3 py-2 text-sm font-medium hover:bg-secondary" activeProps={{ className: "bg-secondary text-primary" }}>{n.label}</Link>
+            <Link key={n.to} to={n.to} className="rounded-full px-3.5 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" activeProps={{ className: "bg-secondary !text-primary font-semibold" }}>{n.label}</Link>
           ))}
-          {role === "farmer" && <Link to="/farmer" className="rounded-full px-3 py-2 text-sm font-semibold text-accent hover:bg-secondary">Farmer Dashboard</Link>}
-          {role === "admin" && <Link to="/admin" className="rounded-full px-3 py-2 text-sm font-semibold text-accent hover:bg-secondary">Admin</Link>}
+          {role === "farmer" && <Link to="/farmer" className="rounded-full px-3.5 py-2 text-sm font-semibold text-accent transition-colors hover:bg-secondary">Dashboard</Link>}
+          {role === "admin" && <Link to="/admin" className="rounded-full px-3.5 py-2 text-sm font-semibold text-accent transition-colors hover:bg-secondary">Admin</Link>}
         </nav>
-        <label className="ml-auto hidden items-center gap-2 text-xs text-muted-foreground sm:flex lg:ml-2">
-          <span className="sr-only md:not-sr-only">Demo role</span>
-          <select className="input w-auto py-1.5 text-xs" value={currentUserId} onChange={(e) => set((s) => ({ ...s, currentUserId: e.target.value }))}>
+        <label className="ml-auto hidden items-center gap-1.5 rounded-full border border-dashed border-border bg-card/60 py-1 pl-3 pr-1 text-[11px] font-semibold uppercase tracking-wide text-muted-foreground sm:flex lg:ml-3">
+          Demo mode
+          <select aria-label="Demo mode: choose role" className="cursor-pointer rounded-full bg-transparent py-1 pr-1 text-xs font-medium normal-case tracking-normal text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring" value={currentUserId} onChange={(e) => set((s) => ({ ...s, currentUserId: e.target.value }))}>
             {users.map((u) => <option key={u.id} value={u.id}>{u.name} · {u.role}</option>)}
           </select>
         </label>
-        <button className="btn-ghost ml-auto p-2 sm:ml-0 lg:hidden" onClick={() => setOpen(!open)} aria-label="Toggle menu" aria-expanded={open}>
+        <button className="btn-ghost ml-auto h-11 w-11 p-0 sm:ml-0 lg:hidden" onClick={() => setOpen(!open)} aria-label="Toggle menu" aria-expanded={open}>
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
       </div>
@@ -47,7 +47,7 @@ export function SiteHeader() {
             {role === "farmer" && <Link to="/farmer" onClick={() => setOpen(false)} className="rounded-xl px-3 py-3 font-semibold text-accent">Farmer Dashboard</Link>}
             {role === "admin" && <Link to="/admin" onClick={() => setOpen(false)} className="rounded-xl px-3 py-3 font-semibold text-accent">Admin Dashboard</Link>}
             <label className="mt-2 block sm:hidden">
-              <span className="label">Demo role</span>
+              <span className="label">Demo mode · role</span>
               <select className="input" value={currentUserId} onChange={(e) => set((s) => ({ ...s, currentUserId: e.target.value }))}>
                 {users.map((u) => <option key={u.id} value={u.id}>{u.name} · {u.role}</option>)}
               </select>
