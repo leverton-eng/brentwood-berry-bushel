@@ -1,230 +1,278 @@
-# Brentwood Berry Bushel
+# Brentwood U-Pick Connect
 
-Build a responsive, mobile-friendly web application called Brentwood U-Pick Connect. The purpose of the application is to provide a centralized source of information that helps visitors discover and plan visits to participating U-pick farms in Brentwood, California.
+Brentwood U-Pick Connect is a responsive, mobile-friendly web application designed to provide a centralized resource for discovering participating U-pick farms in Brentwood, California and planning farm visits.
 
-The application should feel welcoming, outdoorsy, modern, and easy to navigate. Use a clean agricultural/farm-inspired design with warm natural colors, clear typography, cards, icons, and simple navigation. Prioritize mobile usability while also making the desktop version look polished.
+The application brings together farm information, produce and harvest availability, operating information, events, mapping, and visit-planning resources. The Minimum Viable Product (MVP) was developed from the project's approved requirements, user stories, and acceptance criteria and includes functionality for Visitors, Farmers, and Administrators.
 
-User Roles
+## Live Application
 
-The application should support three user roles:
+Brentwood U-Pick Connect can be accessed at:
 
-Visitor – browses farms and plans visits.
+https://lovable.dev/preview/ApueEoF0I4tFWVSjfBzO4swrHKVorRJg
 
-Farmer – manages information for their farm.
+## Key Functional Modules
 
-Administrator – manages farms, events, users, and outdated content.
+### 1. Visitor Experience
 
-Visitor Features
+The visitor experience supports the primary farm-discovery and visit-planning workflows.
 
-Create the following visitor-facing features:
+**Farm Discovery and Profiles**
+- Browse participating Brentwood U-pick farms
+- Search and filter farms by produce
+- Open individual farm profiles
+- View available farm descriptions, locations, contact information, operating hours, produce, harvest information, events, and visitor guidance
 
-Home Page
+**Produce and Harvest Information**
+- View produce availability and harvest information for participating farms
+- View seasonal produce information through the Harvest Calendar
 
-Introduction to Brentwood U-Pick Connect
+**Farm Map**
+- View participating farms on the Farm Map
+- Access corresponding farm information
+- Open external directions for a selected farm
 
-Search bar
+**Saved Farms and Visit Planning**
+- Save participating farms for later
+- View and reopen saved farm profiles
+- Select farms for a planned visit
+- Choose a visit date and party size
+- Add visit notes
+- View expected crowd information when planning a visit
 
-Featured farms
+**Events and Visit Preparation**
+- Browse farm and community events
+- View available event dates, locations, schedules, and descriptions
+- Access visitor preparation guidance and other visit considerations
+- Share supported visit information
 
-Seasonal produce section
+**Visitor Assistant**
+- Ask questions about farms, produce, seasons, operating information, locations, and visit preparation
+- Receive responses based on information available within the application
 
-Upcoming events
+### 2. Farmer Workspace
 
-Quick links to browse farms, harvest information, and visit-planning resources
+The Farmer workspace demonstrates the application's planned farm-management workflows.
 
-Farm Directory
+Farmers can:
 
-Display participating farms as cards
+- Update farm operating information
+- Update operating status and hours
+- Manage produce and harvest availability
+- Manage farm event information
+- View when farm information was last updated
 
-Include farm name, image, location, short description, operating status, and available produce
+Changes made through the demonstration workspace are maintained through client-side application storage and reflected in applicable visitor-facing features.
 
-Allow users to search and filter farms by produce
+### 3. Administrator Workspace
 
-Farm Profile
+The Administrator workspace demonstrates application-level content-management functions.
 
-Farm name and description/history
+Administrators can:
 
-Address/location
+- Manage participating farm information
+- Manage produce and harvest information
+- Manage event information
+- Review and manage application content
+- Review information that may need updating
+- View basic application reporting and analytics
 
-Contact information
+## Technology Stack & Architecture
 
-Operating hours
+Brentwood U-Pick Connect uses a React and TypeScript application architecture designed for responsive desktop and mobile use.
 
-Current open/closed status
+### Frontend
 
-Produce available
+- React 19
+- TypeScript
+- TanStack Start
+- TanStack Router
+- Vite
+- Tailwind CSS 4
+- Radix UI
 
-Harvest/season information
+### Application Libraries and Validation
 
-Visitor guidance and preparation information
+- TanStack React Query
+- Zod
 
-Upcoming farm events
+### Testing
 
-Link to map/directions
+- Vitest
+- React Testing Library
 
-Interactive Farm Map
+### Data and Application State
 
-Display participating farms geographically
+The current MVP uses application data included within the project along with client-side storage for saved farms, planned visits, and demonstration updates.
 
-Selecting a farm should provide basic information and a link to its farm profile
+The current prototype does not require an external database or external authentication service to run locally.
 
-Harvest Calendar
+## Farm Map
 
-Show common produce and approximate harvest/availability periods
+The Farm Map is rendered within the application using React, SVG, and CSS. Latitude and longitude values stored with participating farm records are used to position farm markers within a predefined Brentwood geographic area.
 
-Allow visitors to identify what may be available during different times of the season
+The internal Farm Map does not depend on an external mapping SDK or map-tile provider. Google Maps is used only when a visitor selects the option to obtain external directions.
 
-Visit Planning
+## Project Directory Structure
 
-Visitor preparation guide
+```text
+brentwood-berry-bushel/
+│
+├── public/                 # Public application assets
+│
+├── src/                    # Application source code
+│   ├── components/         # Reusable interface components
+│   ├── data/               # Farm, produce, harvest, event, and related data
+│   ├── lib/                # Shared application logic, state, and utilities
+│   ├── routes/             # Application pages and route-level functionality
+│   └── test/               # Application tests
+│
+├── package.json            # Project dependencies and npm scripts
+├── package-lock.json       # Dependency lock file
+├── tsconfig.json           # TypeScript configuration
+└── vite.config.ts          # Vite configuration
+```
 
-Allow visitors to save/bookmark farms
+Key areas of the application include:
 
-Allow visitors to create and update a planned farm visit
+- `src/routes/` – Visitor, Farmer, and Administrator pages and workflows
+- `src/components/` – reusable interface and application components
+- `src/data/` – farm, produce, harvest, event, and supporting application data
+- `src/lib/` – shared application logic, state management, and utilities
+- `src/test/` – automated application tests
+- `public/` – public application assets
 
-Display relevant information needed before visiting
+## Local Installation & Setup
 
-Events
+### Prerequisites
 
-Centralized page showing upcoming farm and community events
+Install Node.js and npm before running the project locally.
 
-Each event should display its name, date, location, description, and associated farm when applicable
+### 1. Clone the Repository
 
-Farmer Features
+```bash
+git clone https://github.com/leverton-eng/brentwood-berry-bushel.git
+```
 
-Create a farmer dashboard where an authenticated farmer can:
+### 2. Open the Project Directory
 
-Update their farm profile
+```bash
+cd brentwood-berry-bushel
+```
 
-Update produce and harvest availability
+### 3. Install Dependencies
 
-Update operating hours and farm status
+```bash
+npm install
+```
 
-Add or update farm events
+### 4. Start the Development Server
 
-See when information was last updated
-
-Administrator Features
-
-Create an administrator dashboard that allows an administrator to:
-
-Manage participating farms
-
-Manage produce and harvest information
-
-Manage events
-
-Manage users/content
-
-Review and correct inaccurate or outdated information
-
-View basic application usage/reporting information
-
-AI Chatbot
-
-Include a simple chatbot interface that can help visitors find information already available within the application. It should be designed to answer questions about:
-
-Participating farms
-
-Produce availability
-
-Harvest seasons
-
-Farm locations
-
-Operating information
-
-Visit preparation
-
-If information is unavailable, the chatbot should clearly state that rather than inventing an answer. Time-sensitive farm information should indicate when it was last updated.
-
-Data
-
-Create realistic sample/mock data for several Brentwood U-pick farms so the application can be demonstrated without requiring all real farm data immediately.
-
-Include sample:
-
-Farms
-
-Produce
-
-Harvest seasons
-
-Operating hours
-
-Events
-
-Visitor guidance
-
-User roles
-
-Clearly structure the data so the mock information can later be replaced with verified farm information.
-
-Design Requirements
-
-The application should be:
-
-Responsive and mobile-friendly
-
-Simple and intuitive for visitors
-
-Accessible and easy to read
-
-Visually consistent
-
-Designed around cards and clear information hierarchy
-
-Suitable for users who may be accessing it while traveling or planning a farm visit
-
-Use a warm California farm aesthetic rather than a corporate or highly technical appearance. The interface should feel friendly, local, fresh, and community-oriented.
-
-MVP Priority
-
-Prioritize creating a working MVP rather than overengineering every feature.
-
-The highest-priority working features are:
-
-Home page
-
-Farm directory
-
-Farm profiles
-
-Search/filter by produce
-
-Harvest calendar
-
-Farm map
-
-Events
-
-Visit-planning information
-
-Farmer dashboard
-
-Administrator dashboard
-
-Create the application structure and navigation first, then implement these features with realistic sample data. Advanced functionality such as AI responses, analytics, authentication, and social sharing can initially be represented with functional prototypes or clearly structured interfaces if full implementation requires additional services.
-
-Do not invent factual information about real Brentwood farms and present it as verified. Any demonstration data that has not been verified should be clearly treated as sample data.
-
-This project was built with [Lovable](https://lovable.dev).
-
-## Build with Lovable
-
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/ad1faddc-5f4a-59e3-9ce8-101df268886b).
-
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
-
-## Development
-
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
-
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
+```bash
 npm run dev
 ```
+
+Open the local address displayed in the terminal to view the application.
+
+### 5. Create a Production Build
+
+```bash
+npm run build
+```
+
+### Additional Commands
+
+Preview the production build:
+
+```bash
+npm run preview
+```
+
+Run the linter:
+
+```bash
+npm run lint
+```
+
+Run automated tests:
+
+```bash
+npm run test
+```
+
+Run tests in watch mode:
+
+```bash
+npm run test:watch
+```
+
+Format the project:
+
+```bash
+npm run format
+```
+
+## Testing and Requirements Validation
+
+Application testing is based on the project's documented requirements, user stories, and acceptance criteria.
+
+Testing covers the primary Visitor, Farmer, and Administrator workflows, including:
+
+- Farm browsing and farm profiles
+- Produce search and filtering
+- Produce and harvest information
+- Farm Map and directions
+- Harvest Calendar
+- Saved farms
+- Visit planning
+- Expected visitor levels
+- Events
+- Visit-preparation information
+- Sharing functionality
+- Visitor assistance
+- Farmer workspace
+- Administrator workspace
+- Responsive desktop and mobile behavior
+
+Automated tests included in the project can be run with:
+
+```bash
+npm run test
+```
+
+## Data and Setup Assumptions
+
+The current application uses sample data for farms, produce, harvest seasons, events, operating information, and other application features.
+
+Sample information is used for demonstration purposes and should not be considered verified real-time information from individual Brentwood farms.
+
+The current MVP does not require:
+
+- An external database
+- External user authentication
+- An external map SDK or map-tile service for the internal Farm Map
+
+## Current Limitations and Future Improvements
+
+The current application is an MVP and has several limitations:
+
+- Farm and harvest information is demonstration data rather than verified real-time farm data.
+- Saved farms, planned visits, and demonstration updates are maintained through client-side storage rather than a persistent backend database.
+- The current prototype does not implement production user authentication and authorization.
+- Farmer and Administrator workspaces demonstrate the intended role-based management workflows but do not connect to a production backend.
+- External directions depend on Google Maps when the directions option is selected.
+
+Future development could include persistent backend storage, secure user authentication and role-based authorization, verified real-time farm information, and production-ready Farmer and Administrator data management.
+
+## Team Members
+
+- Lorraine Everton
+- Fei Teng
+- Sheila Olewe
+- Rohan Sehgal
+
+## Project Information
+
+**University:** Boston University  
+**Course:** MET CS 632 – IT Project Management  
+**Milestone:** Milestone 2  
+**Project:** Brentwood U-Pick Connect
